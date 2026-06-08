@@ -1,3 +1,4 @@
+using System.Numerics;
 using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,15 +23,14 @@ app.MapGet("/app/damirk120404_gmail_com", async ctx =>
  
     string result;
  
-    if (!ulong.TryParse(q["x"], out var a) || a == 0 ||
-        !ulong.TryParse(q["y"], out var b) || b == 0)
+    if (!BigInteger.TryParse(q["x"], out var a) || a <= 0 ||
+        !BigInteger.TryParse(q["y"], out var b) || b <= 0)
     {
         result = "NaN";
     }
     else
     {
-        static ulong Gcd(ulong p, ulong q) => q == 0 ? p : Gcd(q, p % q);
-        result = (a / Gcd(a, b) * b).ToString();
+        result = (a / BigInteger.GreatestCommonDivisor(a, b) * b).ToString();
     }
  
     var bytes = System.Text.Encoding.UTF8.GetBytes(result);
