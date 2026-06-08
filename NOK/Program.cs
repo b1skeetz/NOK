@@ -16,7 +16,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
  
-app.MapGet("/damirk120404_gmail_com", async ctx =>
+app.MapGet("/app/damirk120404_gmail_com", async ctx =>
 {
     var q = ctx.Request.Query;
  
