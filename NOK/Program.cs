@@ -15,26 +15,28 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-app.MapGet("/api/task3/damirk120404_gmail_com", async ctx =>
+ 
+app.MapGet("/damirk120404_gmail_com", async ctx =>
 {
     var q = ctx.Request.Query;
+ 
+    string result;
  
     if (!ulong.TryParse(q["x"], out var a) || a == 0 ||
         !ulong.TryParse(q["y"], out var b) || b == 0)
     {
-        ctx.Response.ContentType = "text/plain";
-        await ctx.Response.WriteAsync("NaN");
-        return;
+        result = "NaN";
+    }
+    else
+    {
+        static ulong Gcd(ulong p, ulong q) => q == 0 ? p : Gcd(q, p % q);
+        result = (a / Gcd(a, b) * b).ToString();
     }
  
-    static ulong Gcd(ulong p, ulong q) => q == 0 ? p : Gcd(q, p % q);
- 
-    var lcm = a / Gcd(a, b) * b;
- 
+    var bytes = System.Text.Encoding.UTF8.GetBytes(result);
     ctx.Response.ContentType = "text/plain";
-    await ctx.Response.WriteAsync(lcm.ToString());
+    ctx.Response.ContentLength = bytes.Length;
+    await ctx.Response.Body.WriteAsync(bytes);
 });
-
+ 
 app.Run();
-
