@@ -14,7 +14,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapGet("/damirk120404@gmail.com", (string x, string y) =>
+app.MapGet("/damirk120404_gmail_com", (string x, string y) =>
 {
     if (!ulong.TryParse(x, out var a) || a == 0 ||
         !ulong.TryParse(y, out var b) || b == 0)
