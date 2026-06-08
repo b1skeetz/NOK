@@ -1,0 +1,7 @@
+﻿services:
+  nok:
+    image: nok
+    build:
+      context: .
+      dockerfile: NOK/Dockerfile
+
