@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Mvc;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -14,16 +16,17 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapGet("/damirk120404_gmail_com", (string x, string y) =>
+app.MapGet("/damirk120404_gmail_com", async ([FromQuery] string x, [FromQuery] string y) =>
 {
     if (!ulong.TryParse(x, out var a) || a == 0 ||
         !ulong.TryParse(y, out var b) || b == 0)
-        return Results.Text("NaN");
+        return Results.Content("NaN");
 
-    static ulong Gcd(ulong p, ulong q) => q == 0 ? p : Gcd(q, p % q);
     var lcm = a / Gcd(a, b) * b;
 
-    return Results.Text(lcm.ToString());
+    return Results.Content(lcm.ToString());
+
+    static ulong Gcd(ulong p, ulong q) => q == 0 ? p : Gcd(q, p % q);
 });
 
 app.Run();
